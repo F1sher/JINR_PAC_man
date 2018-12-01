@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title>JINR PAC руководство</title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<div id="header">
+<h1 class="title">JINR PAC руководство</h1>
+<h3 class="date">Декабрь 1, 2018</h3>
+</div>
+<h1>Основы работы спектрометра JINR PAC</h1>
+<p>Таким образом при первоначальном включении спектрометра необходимо выполнить следующие процедуры для запуска накопления:</p>
+<ol style="list-style-type: decimal">
+<li><p><a href="#firmware_FPGA">Загрузить прошивку в ПЛИС</a></p></li>
+<li><p>Загрузить прошивку в USB контроллер</p></li>
+<li><p>Провести инициализацию параметров ПЛИС</p></li>
+<li><p>Задать параметры экспозиции</p></li>
+<li><p>Провести запуск экспозиции</p></li>
+</ol>
+<p>В том случае, если питание спектрометра не выключалось и процедуры прошивки и инициализации были выполнены ранее, то первые три пункта можно пропустить.</p>
+<h1>Загрузка прошивки в ПЛИС</h1>
+<p>Загрузка прошивки в ПЛИС из ОС Windows 7</p>
+<p>Загрузка прошивки из ОС Linux</p>
+<ol style="list-style-type: decimal">
+<li><p>Откройте Terminal</p></li>
+<li><p>Перейдите в каталог с пакетом програм Xilinx ISE:</p>
+<pre><code>    cd ~/job/xilinx_soft/bin
+    
+    </code></pre></li>
+<li><p>Запустите программу impact:</p>
+<pre><code>    impact
+    
+    </code></pre></li>
+<li><p>Далее последовательность действий <a href="#upload_firmware_FPGA_win">такая же как в Windows 7</a>. Иногда может потребоваться произвести поиск ПЛИС () два раза и/или переподключить USB кабель программатора ПЛИС к ПК.</p></li>
+</ol>
+<h1>Загрузка прошивки в USB контроллер</h1>
+<p>Загрузка прошивки из OC Linux (с использованием графического интерфейса):</p>
+<ol style="list-style-type: decimal">
+<li><p>Откройте Terminal</p></li>
+<li><p>Запустите программу Cypress USB control center командой:</p>
+<pre><code>    cyusb_linux
+    
+    </code></pre></li>
+<li><p>В Cypress USB control center выберите необходимый контроллер. Он должен иметь VID ... и PID ...</p></li>
+<li><p>Выберите вкладку Download, затем в списке ... выберите пункт Download FX2 ...</p></li>
+</ol>
+</body>
+</html>

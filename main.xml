@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD Simplified DocBook XML V1.0//EN"
+"http://www.oasis-open.org/docbook/xml/simple/1.0/sdocbook.dtd">
+<article>
+  <title>JINR PAC руководство</title>
+  <articleinfo>
+    <date>Декабрь 1, 2018</date>
+  </articleinfo>
+  <section>
+    <title>Основы работы спектрометра JINR PAC</title>
+    <para>
+      Таким образом при первоначальном включении спектрометра необходимо выполнить
+      следующие процедуры для запуска накопления:
+      <orderedlist>
+	<listitem>
+	  <para><link linkend='firmware_FPGA'>Загрузить прошивку в ПЛИС</link></para>
+	</listitem>
+	<listitem>
+	  <para>Загрузить прошивку в USB контроллер</para>
+	</listitem>
+	<listitem>
+	  <para>Провести инициализацию параметров ПЛИС</para>
+	</listitem>
+	<listitem>
+	  <para>Задать параметры экспозиции</para>
+	</listitem>
+	<listitem>
+	  <para>Провести запуск экспозиции</para>
+	</listitem>
+      </orderedlist>
+      В том случае, если питание спектрометра не выключалось и процедуры прошивки и инициализации 
+      были выполнены ранее, то первые три пункта можно пропустить.
+    </para>
+  </section>
+
+  <section id='firmware_FPGA'>
+    <title>Загрузка прошивки в ПЛИС</title>
+    <para id="upload_firmware_FPGA_win">Загрузка прошивки в ПЛИС из ОС Windows 7</para>
+
+    <para>Загрузка прошивки из ОС Linux</para>
+    <orderedlist>
+      <listitem>
+	<para>Откройте Terminal</para>
+      </listitem>
+      <listitem>
+	<para>Перейдите в каталог с пакетом програм Xilinx ISE:</para>
+	<programlisting><![CDATA[
+	cd ~/job/xilinx_soft/bin
+	]]>
+	</programlisting>
+      </listitem>
+      <listitem>
+	<para>Запустите программу impact:</para>
+	<programlisting><![CDATA[
+	impact
+	]]>
+	</programlisting>
+      </listitem>
+      <listitem>
+	<para>Далее последовательность действий <link linkend='upload_firmware_FPGA_win'>такая же как в Windows 7</link>.
+	Иногда может потребоваться произвести поиск ПЛИС () два раза и/или переподключить USB кабель программатора ПЛИС к ПК.
+	</para>
+    </orderedlist>
+  </section>
+
+  <section id="firmware_USB">
+    <title>Загрузка прошивки в USB контроллер</title>
+    <para>Загрузка прошивки из OC Linux (с использованием графического интерфейса):</para>
+    <orderedlist>
+      <listitem>
+	<para>Откройте Terminal</para>
+      </listitem>
+      <listitem>
+	<para>Запустите программу Cypress USB control center командой:</para>
+	<programlisting><![CDATA[
+	cyusb_linux
+	]]>
+	</programlisting>
+      </listitem>
+      <listitem>
+	<para>В Cypress USB control center выберите необходимый контроллер. Он должен иметь VID ... и PID ...</para>
+      </listitem>
+      <listitem>
+	<para>Выберите вкладку Download, затем в списке ... выберите пункт Download FX2 ...</para>
+      </listitem>
+    </orderedlist>
+    <para>Загрузка прошивки из OC Linux (с использованием интерфейса терминала):</para>
+    <orderedlist>
+      <listitem>
+	<para>Откройте Terminal</para>
+      </listitem>
+      <listitem>
+	<para>В терминале наберите следующую команду:</para>
+
+	<para>Эта команда запускает программу , которая берет прошивку и загружает ее в USB контроллер</para>
+      </listitem>
+    </orderedlist>
+  </section>
+</article>
