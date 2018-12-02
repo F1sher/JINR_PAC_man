@@ -23,30 +23,60 @@
 </ol>
 <p>В том случае, если питание спектрометра не выключалось и процедуры прошивки и инициализации были выполнены ранее, то первые три пункта можно пропустить.</p>
 <h1>Загрузка прошивки в ПЛИС</h1>
-<p>Загрузка прошивки в ПЛИС из ОС Windows 7</p>
+1. Open &quot;Impact&quot; program 2. Select &quot;Boundary Scan&quot; in left top menu 3. Right click to add device 4. Select &quot;Initialize chain&quot; 5. Select firmware for FPGA (for example, working firmware is located in E:/work/Proshivki/9253/Right/4poroga+count.bit) 6. In open window click Ok 7. Right click device and select &quot;Program...&quot; 8. Click Ok
+<p>Загрузка прошивки в ПЛИС из ОС Windows XP</p>
+<ol style="list-style-type: decimal">
+<li><p>Запустите программу Impact</p></li>
+<li><p>Кликните дважды по Boundary Scan в окне программы в левом верхнем меню</p>
+<p><img src="./imgs/firmware_FPGA_win_Bounddary_Scan.png" /></p></li>
+<li><p>Кликните правой кнопкой мыши для добавления устройства в поле Boundary Scan справа</p></li>
+<li><p>Выберите Initialize chain</p>
+<p><img src="./imgs/firmware_FPGA_win_Add_device.png" /></p></li>
+<li><p>Выберите прошивку ПЛИС</p>
+<p>Одна из рабочих версий прошивки находится по адресу</p>
+<pre><code>          E:/work/Proshivki/9253/Right/4poroga+count.bit
+        </code></pre>
+<p>В открывшемся окне кликните Ok</p></li>
+<li><p>Кликните правой кнопкой мыши на устройстве и выберите Program...</p>
+<p><img src="./imgs/firmware_FPGA_win_Program.png" /></p></li>
+<li><p>В появившемся окне кликните Ok. После нескольких секунд прошивка ПЛИС будет завершена и в поле Boundary Scan появится надпись на синем фоне Program Succeded</p></li>
+<li><p>На этом процедура прошивки ПЛИС завершена. Программу Impact можно закрывать. Сохранять проект не надо.</p></li>
+</ol>
 <p>Загрузка прошивки из ОС Linux</p>
 <ol style="list-style-type: decimal">
-<li><p>Откройте Terminal</p></li>
+<li><p>Запустите Terminal</p></li>
 <li><p>Перейдите в каталог с пакетом програм Xilinx ISE:</p>
-<pre><code>    cd ~/job/xilinx_soft/bin
-    
+<pre><code>      cd ~/job/xilinx_soft/bin
     </code></pre></li>
 <li><p>Запустите программу impact:</p>
-<pre><code>    impact
-    
+<pre><code>      impact
     </code></pre></li>
-<li><p>Далее последовательность действий <a href="#upload_firmware_FPGA_win">такая же как в Windows 7</a>. Иногда может потребоваться произвести поиск ПЛИС () два раза и/или переподключить USB кабель программатора ПЛИС к ПК.</p></li>
+<li><p>Далее последовательность действий <a href="#upload_firmware_FPGA_win">такая же как в Windows XP</a>. Иногда может потребоваться произвести поиск ПЛИС () два раза и/или переподключить USB кабель программатора ПЛИС к ПК.</p></li>
 </ol>
 <h1>Загрузка прошивки в USB контроллер</h1>
 <p>Загрузка прошивки из OC Linux (с использованием графического интерфейса):</p>
 <ol style="list-style-type: decimal">
 <li><p>Откройте Terminal</p></li>
 <li><p>Запустите программу Cypress USB control center командой:</p>
-<pre><code>    cyusb_linux
-    
-    </code></pre></li>
-<li><p>В Cypress USB control center выберите необходимый контроллер. Он должен иметь VID ... и PID ...</p></li>
-<li><p>Выберите вкладку Download, затем в списке ... выберите пункт Download FX2 ...</p></li>
+<pre><code>          cyusb_linux
+        </code></pre></li>
+<li><p>В Cypress USB control center выберите необходимый контроллер. Он должен иметь VID=04b4 и PID=8613</p></li>
+<li><p>Выберите вкладку Program, затем в списке Download to -&gt; выберите пункт RAM, в списке Which RAM выберите пункт Internal</p></li>
+<li><p>Нажмите на кнопку Select File и выберите необходимую прошивку USB контроллера</p>
+<p>Одна из прошивок находится по адресу:</p>
+<pre><code>          /home/das/job/dsp/firmwares/512x4.hex
+        </code></pre></li>
+<li><p>Произведите загрузку прошивки в контроллер нажатием кнопки Start Download</p>
+<p>В случае успешной прошивки появится диалоговое окно с текстом &quot;Successfully downloaded&quot;</p></li>
+<li><p>После прошивки контроллер необходимо перезагрузить путем нажатия кнопки Reset Device</p></li>
+</ol>
+<p>Загрузка прошивки из OC Linux (с использованием интерфейса терминала):</p>
+<ol style="list-style-type: decimal">
+<li><p>Откройте Terminal</p></li>
+<li><p>В терминале наберите следующую команду:</p>
+<pre><code>      download_fx2 ...
+    </code></pre>
+<p>Эта команда запускает программу download_fx2, которая загружает прошивку 512x4.hex в USB контроллер с VID=04b4 и PID=8613</p></li>
 </ol>
 </body>
 </html>
