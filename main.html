@@ -10,20 +10,19 @@
 <body>
 <div id="header">
 <h1 class="title">JINR PAC руководство</h1>
-<h3 class="date">Декабрь 1, 2018</h3>
+<h3 class="date">Декабрь 9, 2018</h3>
 </div>
 <h1>Основы работы спектрометра JINR PAC</h1>
 <p>Таким образом при первоначальном включении спектрометра необходимо выполнить следующие процедуры для запуска накопления:</p>
 <ol style="list-style-type: decimal">
 <li><p><a href="#firmware_FPGA">Загрузить прошивку в ПЛИС</a></p></li>
-<li><p>Загрузить прошивку в USB контроллер</p></li>
+<li><p><a href="#firmware_USB">Загрузить прошивку в USB контроллер</a></p></li>
 <li><p>Провести инициализацию параметров ПЛИС</p></li>
 <li><p>Задать параметры экспозиции</p></li>
 <li><p>Провести запуск экспозиции</p></li>
 </ol>
 <p>В том случае, если питание спектрометра не выключалось и процедуры прошивки и инициализации были выполнены ранее, то первые три пункта можно пропустить.</p>
 <h1>Загрузка прошивки в ПЛИС</h1>
-1. Open &quot;Impact&quot; program 2. Select &quot;Boundary Scan&quot; in left top menu 3. Right click to add device 4. Select &quot;Initialize chain&quot; 5. Select firmware for FPGA (for example, working firmware is located in E:/work/Proshivki/9253/Right/4poroga+count.bit) 6. In open window click Ok 7. Right click device and select &quot;Program...&quot; 8. Click Ok
 <p>Загрузка прошивки в ПЛИС из ОС Windows XP</p>
 <ol style="list-style-type: decimal">
 <li><p>Запустите программу Impact</p></li>
@@ -46,29 +45,35 @@
 <ol style="list-style-type: decimal">
 <li><p>Запустите Terminal</p></li>
 <li><p>Перейдите в каталог с пакетом програм Xilinx ISE:</p>
-<pre><code>      cd ~/job/xilinx_soft/bin
-    </code></pre></li>
+<pre><code>          cd ~/job/xilinx_soft/bin
+        </code></pre></li>
 <li><p>Запустите программу impact:</p>
-<pre><code>      impact
-    </code></pre></li>
+<pre><code>          impact
+        </code></pre></li>
 <li><p>Далее последовательность действий <a href="#upload_firmware_FPGA_win">такая же как в Windows XP</a>. Иногда может потребоваться произвести поиск ПЛИС () два раза и/или переподключить USB кабель программатора ПЛИС к ПК.</p></li>
 </ol>
 <h1>Загрузка прошивки в USB контроллер</h1>
 <p>Загрузка прошивки из OC Linux (с использованием графического интерфейса):</p>
 <ol style="list-style-type: decimal">
-<li><p>Откройте Terminal</p></li>
-<li><p>Запустите программу Cypress USB control center командой:</p>
+<li><p>Запустите Terminal</p></li>
+<li><p>Запустите программу Cypress USB control center набрав в Терминале команду:</p>
 <pre><code>          cyusb_linux
-        </code></pre></li>
-<li><p>В Cypress USB control center выберите необходимый контроллер. Он должен иметь VID=04b4 и PID=8613</p></li>
-<li><p>Выберите вкладку Program, затем в списке Download to -&gt; выберите пункт RAM, в списке Which RAM выберите пункт Internal</p></li>
+        </code></pre>
+<p>и затем нажмите клавишу Enter</p></li>
+<li><p>В Cypress USB control center выберите необходимый контроллер. Он должен иметь VID=04b4 и PID=8613</p>
+<p><img src="./imgs/firmware_USB_lin_Select_controller.png" /></p></li>
+<li><p>Выберите вкладку Program, владку FX2. Затем в списке Download to -&gt; выберите пункт RAM, в списке Which RAM выберите пункт Internal</p>
+<p><img src="./imgs/firmware_USB_lin_Select_RAM.png" /></p></li>
 <li><p>Нажмите на кнопку Select File и выберите необходимую прошивку USB контроллера</p>
-<p>Одна из прошивок находится по адресу:</p>
+<p>Одна из рабочих прошивок находится по адресу:</p>
 <pre><code>          /home/das/job/dsp/firmwares/512x4.hex
         </code></pre></li>
 <li><p>Произведите загрузку прошивки в контроллер нажатием кнопки Start Download</p>
-<p>В случае успешной прошивки появится диалоговое окно с текстом &quot;Successfully downloaded&quot;</p></li>
-<li><p>После прошивки контроллер необходимо перезагрузить путем нажатия кнопки Reset Device</p></li>
+<p>В случае успешной прошивки появится диалоговое окно с текстом &quot;Successfully downloaded&quot;</p>
+<p><img src="./imgs/firmware_USB_lin_Success.png" /></p>
+<p>В случае возникновения ошибки подробности об ошибке могут быть прочитаны в окне Терминала</p></li>
+<li><p>После прошивки контроллер необходимо перезагрузить путем нажатия кнопки Reset Device в программе cyusb_linux</p>
+<p>При этом PID контроллера в списке List of devices должен измениться и стать PID=00f1 (VID остается прежним)</p></li>
 </ol>
 <p>Загрузка прошивки из OC Linux (с использованием интерфейса терминала):</p>
 <ol style="list-style-type: decimal">
@@ -77,6 +82,22 @@
 <pre><code>      download_fx2 ...
     </code></pre>
 <p>Эта команда запускает программу download_fx2, которая загружает прошивку 512x4.hex в USB контроллер с VID=04b4 и PID=8613</p></li>
+</ol>
+<h1>Инициализация параметров ПЛИС</h1>
+<ol style="list-style-type: decimal">
+<li><p>Запустите Terminal</p></li>
+<li><p>Запустите программу dsppac набрав в Терминале команду:</p>
+<pre><code>           dsppac
+         </code></pre>
+<p>и затем нажмите клавишу Enter</p></li>
+<li><p>Для настройки параметров ПЛИС выберите в верхнем меню программы ExpositionMode -&gt; Settings</p>
+<p><img src="./imgs/set_FPGA_Select_menu.png" /></p></li>
+<li><p>В появившемся окне выставите значения порога для каждого из четырех детекторов и напротив полей с порогами нажмите кнопку Set porog</p>
+<p><img src="./imgs/set_FPGA_Set_porog.png" /></p></li>
+<li><p>Выставите значение времени совпадений и напротив соответствующего поля нажмите кнопку Set time of coinc. После этого нажмите кнопку Reset</p>
+<p><img src="./imgs/set_FPGA_Set_timeofcoinc.png" /></p></li>
+<li><p>Для выбора режима накопления с совпадениями или без совпадений нажмите кнопку Coinc on или Coinc off, соответственно. После этого нажмите кнопку Reset.</p>
+<p><img src="./imgs/set_FPGA_Coinc_mode.png" /></p></li>
 </ol>
 </body>
 </html>

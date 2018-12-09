@@ -4,7 +4,7 @@
 <article>
   <title>JINR PAC руководство</title>
   <articleinfo>
-    <date>Декабрь 1, 2018</date>
+    <date>Декабрь 9, 2018</date>
   </articleinfo>
   <section>
     <title>Основы работы спектрометра JINR PAC</title>
@@ -16,7 +16,7 @@
 	  <para><link linkend='firmware_FPGA'>Загрузить прошивку в ПЛИС</link></para>
 	</listitem>
 	<listitem>
-	  <para>Загрузить прошивку в USB контроллер</para>
+	  <para><link linkend='firmware_USB'>Загрузить прошивку в USB контроллер</link></para>
 	</listitem>
 	<listitem>
 	  <para>Провести инициализацию параметров ПЛИС</para>
@@ -86,49 +86,60 @@
     <para>Загрузка прошивки из ОС Linux</para>
     <orderedlist>
       <listitem>
-	<para>Запустите Terminal</para>
+		<para>Запустите Terminal</para>
       </listitem>
       <listitem>
-	<para>Перейдите в каталог с пакетом програм Xilinx ISE:</para>
-	<programlisting>
-	  <![CDATA[cd ~/job/xilinx_soft/bin]]>
-	</programlisting>
+		<para>Перейдите в каталог с пакетом програм Xilinx ISE:</para>
+		<programlisting>
+		  <![CDATA[cd ~/job/xilinx_soft/bin]]>
+		</programlisting>
       </listitem>
       <listitem>
-	<para>Запустите программу impact:</para>
-	<programlisting>
-	  <![CDATA[impact]]>
-	</programlisting>
+		<para>Запустите программу impact:</para>
+		<programlisting>
+		  <![CDATA[impact]]>
+		</programlisting>
       </listitem>
       <listitem>
-	<para>Далее последовательность действий <link linkend='upload_firmware_FPGA_win'>такая же как в Windows XP</link>.
-	Иногда может потребоваться произвести поиск ПЛИС () два раза и/или переподключить USB кабель программатора ПЛИС к ПК.
-	</para>
-    </orderedlist>
-  </section>
+		<para>Далее последовательность действий <link linkend='upload_firmware_FPGA_win'>такая же как в Windows XP</link>.
+		Иногда может потребоваться произвести поиск ПЛИС () два раза и/или переподключить USB кабель программатора ПЛИС к ПК.
+		</para>
+      </orderedlist>
+	</section>
 
   <section id="firmware_USB">
     <title>Загрузка прошивки в USB контроллер</title>
     <para>Загрузка прошивки из OC Linux (с использованием графического интерфейса):</para>
     <orderedlist>
       <listitem>
-	<para>Откройте Terminal</para>
+		<para>Запустите Terminal</para>
       </listitem>
       <listitem>
-		<para>Запустите программу Cypress USB control center командой:</para>
+		<para>Запустите программу Cypress USB control center набрав в Терминале команду:</para>
 		<programlisting>
 		  <![CDATA[cyusb_linux]]>
 		</programlisting>
+	  <para>и затем нажмите клавишу Enter</para>
       </listitem>
       <listitem>
-	<para>В Cypress USB control center выберите необходимый контроллер. Он должен иметь VID=04b4 и PID=8613</para>
+		<para>В Cypress USB control center выберите необходимый контроллер. Он должен иметь VID=04b4 и PID=8613</para>
+		<mediaobject>
+		  <imageobject>
+			<imagedata fileref='./imgs/firmware_USB_lin_Select_controller.png'/>
+		  </imageobject>
+		</mediaobject>
       </listitem>
       <listitem>
-		<para>Выберите вкладку Program, затем в списке Download to -> выберите пункт RAM, в списке Which RAM выберите пункт Internal</para>
+		<para>Выберите вкладку Program, владку FX2. Затем в списке Download to -> выберите пункт RAM, в списке Which RAM выберите пункт Internal</para>
+		<mediaobject>
+		  <imageobject>
+			<imagedata fileref='./imgs/firmware_USB_lin_Select_RAM.png'/>
+		  </imageobject>
+		</mediaobject>
       </listitem>
 	  <listitem>
 		<para>Нажмите на кнопку Select File и выберите необходимую прошивку USB контроллера</para>
-		<para>Одна из прошивок находится по адресу:</para>
+		<para>Одна из рабочих прошивок находится по адресу:</para>
 		<programlisting>
 		  <![CDATA[/home/das/job/dsp/firmwares/512x4.hex]]>
 		</programlisting>
@@ -136,9 +147,16 @@
 	  <listitem>
 		<para>Произведите загрузку прошивки в контроллер нажатием кнопки Start Download</para>
 		<para>В случае успешной прошивки появится диалоговое окно с текстом "Successfully downloaded"</para>
+		<mediaobject>
+		  <imageobject>
+			<imagedata fileref='./imgs/firmware_USB_lin_Success.png'/>
+		  </imageobject>
+		</mediaobject>
+		<para>В случае возникновения ошибки подробности об ошибке могут быть прочитаны в окне Терминала</para>
 	  </listitem>
 	  <listitem>
-		<para>После прошивки контроллер необходимо перезагрузить путем нажатия кнопки Reset Device</para>
+		<para>После прошивки контроллер необходимо перезагрузить путем нажатия кнопки Reset Device в программе cyusb_linux</para>
+		<para>При этом PID контроллера в списке List of devices должен измениться и стать PID=00f1 (VID остается прежним)</para>
 	  </listitem>
     </orderedlist>
 
@@ -156,4 +174,55 @@
       </listitem>
     </orderedlist>
   </section>
+
+  <section>
+	 <title>Инициализация параметров ПЛИС</title>
+	 <orderedlist>
+	   <listitem>
+		<para>Запустите Terminal</para>
+       </listitem>
+	   <listitem>
+		 <para>Запустите программу dsppac набрав в Терминале команду:</para>
+		 <programlisting>
+		   <![CDATA[dsppac]]>
+		 </programlisting>
+		 <para>и затем нажмите клавишу Enter</para>
+	   </listitem>
+	   <listitem>
+		 <para>Для настройки параметров ПЛИС выберите в верхнем меню программы ExpositionMode -> Settings</para>
+		 <mediaobject>
+		  <imageobject>
+			<imagedata fileref='./imgs/set_FPGA_Select_menu.png'/>
+		  </imageobject>
+		</mediaobject>
+	   </listitem>
+	   <listitem>
+		 <para>В появившемся окне выставите значения порога для каждого из четырех детекторов и напротив полей с порогами нажмите кнопку Set porog</para>
+		 <mediaobject>
+		   <imageobject>
+			 <imagedata fileref='./imgs/set_FPGA_Set_porog.png'/>
+		   </imageobject>
+		 </mediaobject>
+	   </listitem>
+	   <listitem>
+		 <para>Выставите значение времени совпадений и напротив соответствующего поля нажмите кнопку Set time of coinc. После этого нажмите кнопку Reset</para>
+		 <mediaobject>
+		   <imageobject>
+			 <imagedata fileref='./imgs/set_FPGA_Set_timeofcoinc.png'/>
+		   </imageobject>
+		 </mediaobject>
+	   </listitem>
+	   <listitem>
+		 <para>Для выбора режима накопления с совпадениями или без совпадений нажмите кнопку Coinc on или Coinc off, соответственно. После этого нажмите кнопку Reset.</para>
+		 <mediaobject>
+		   <imageobject>
+			 <imagedata fileref='./imgs/set_FPGA_Coinc_mode.png'/>
+		   </imageobject>
+		 </mediaobject>
+	   </listitem>
+	 </orderedlist>
+	 
+  </section>
+
+
 </article>
