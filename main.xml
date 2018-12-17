@@ -4,7 +4,7 @@
 <article>
   <title>JINR PAC руководство</title>
   <articleinfo>
-    <date>Декабрь 9, 2018</date>
+    <date>Декабрь 17, 2018</date>
   </articleinfo>
   <section>
     <title>Основы работы спектрометра JINR PAC</title>
@@ -19,17 +19,17 @@
 	  <para><link linkend='firmware_USB'>Загрузить прошивку в USB контроллер</link></para>
 	</listitem>
 	<listitem>
-	  <para>Провести инициализацию параметров ПЛИС</para>
+	  <para><link linkend='init_FPGA'>Провести инициализацию параметров ПЛИС</link></para>
 	</listitem>
 	<listitem>
-	  <para>Задать параметры экспозиции</para>
+	  <para><link linkend='set_exposition'>Задать параметры экспозиции</link></para>
 	</listitem>
 	<listitem>
-	  <para>Провести запуск экспозиции</para>
+	  <para><link linkend='start_exposition'>Провести запуск экспозиции</link></para>
 	</listitem>
       </orderedlist>
       В том случае, если питание спектрометра не выключалось и процедуры прошивки и инициализации 
-      были выполнены ранее, то первые три пункта можно пропустить.
+      были выполнены ранее, то первые три пункта этого руководства можно пропустить.
     </para>
   </section>
 
@@ -175,7 +175,7 @@
     </orderedlist>
   </section>
 
-  <section>
+  <section id='init_FPGA'>
 	 <title>Инициализация параметров ПЛИС</title>
 	 <orderedlist>
 	   <listitem>
@@ -221,7 +221,57 @@
 		 </mediaobject>
 	   </listitem>
 	 </orderedlist>
-	 
+  </section>
+
+  <section id='set_exposition'>
+	<title>Установка параметров экспозиции</title>
+	<orderedlist>
+	  <listitem>
+		<para>Запустите Terminal и из него запустите программу dsppac</para>
+	  </listitem>
+	  <listitem>
+		<para>Для установки параметров экспозиции выберите в верхнем меню программы ExpositionMode -> Settings</para>
+		<mediaobject>
+		  <imageobject>
+			<imagedata fileref='./imgs/set_FPGA_Select_menu.png'/>
+		  </imageobject>
+		</mediaobject>
+	  </listitem>
+	  <listitem>
+		<para>В появившемся списке вы можете задать такие параметры экспозиции, как</para>
+		<para>
+		  <itemizedlist>
+			<listitem><para>Сохранять ли накопленные формы сигналов с помощью ползунка-переключателя hdrainer signal OFF/ON (по умолчанию OFF)</para></listitem>
+			<listitem><para>Время экспозиции (накопления) в поле ACQ time</para>
+			<para>В том случае если в этом поле указано целое число, то оно интерпретируется, как время в секундах.</para>
+			<para>Также возможны следующие форматы указания времени: "123m", "123h", "123d" -, которые задают время экспозиции в минутах (minutes), часах (hours), днях (days), соответственно.</para></listitem>
+			<listitem><para>Каталог, в котором будут сохраняться накопленные спектры</para></listitem>
+			<listitem><para>Энергетические окна для каждого из четырех детекторов в полях EN window #1-4 в формате</para>
+			<para>"g1_l, g1_r, g2_l, g2_r", где</para>
+			<para>g1_l - целое число, соответствующее <emphasis>левой</emphasis> границе энергетического окна для гамма-кванта <emphasis>1</emphasis> в каскаде</para>
+			<para>g1_r - целое число, соответствующее <emphasis>правой</emphasis> границе энергетического окна для гамма-кванта <emphasis>1</emphasis> в каскаде</para>
+			<para>g2_l - целое число, соответствующее <emphasis>левой</emphasis> границе энергетического окна для гамма-кванта <emphasis>2</emphasis> в каскаде</para>
+			<para>g2_r - целое число, соответствующее <emphasis>правой</emphasis> границе энергетического окна для гамма-кванта <emphasis>2</emphasis> в каскаде</para>
+			<para>Все энергетические окна задаются в каналах энергетического спектра.</para></listitem>
+		  </itemizedlist>
+		</para>
+	  </listitem>
+	</orderedlist>
+  </section>
+
+  <section id='start_exposition'>
+	<title>Запуск экспозиции</title>
+	<orderedlist>
+	  <listitem><para>Запустите Terminal и из него запустите программу dsppac</para></listitem>
+	  <listitem><para>Для запуска экпозиции нажмите кнопку Start в основном окне программы. При этом при накоплении эта кнопка окажется вдавленной. Для остановки нажмите кнопку Stop.</para>
+	  <para>При нормальном запуске экспозиции в поле Time будет отображаться время с начала экспозиции и в поле Intensity интенсивность со всех четырех детекторов (в режиме совпадений или без).</para>
+	  <mediaobject>
+		<imageobject>
+		  <imagedata fileref='./imgs/start_exposition_Btns_Info_field.png'/>
+		</imageobject>
+	  </mediaobject>
+	  </listitem>
+	</orderedlist>
   </section>
 
 
